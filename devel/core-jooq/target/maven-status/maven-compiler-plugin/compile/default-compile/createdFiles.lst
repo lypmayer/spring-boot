@@ -1,0 +1,15 @@
+org\jooq\db\Keys$UniqueKeys0.class
+org\jooq\db\Selecao.class
+org\jooq\db\DefaultCatalog.class
+org\jooq\db\Indexes$Indexes0.class
+org\jooq\db\tables\EnFlywaySchemaVersion.class
+org\jooq\db\Keys$Identities0.class
+org\jooq\db\tables\records\EnTaskRecord.class
+org\jooq\db\Indexes.class
+org\jooq\db\Tables.class
+org\jooq\db\Keys.class
+org\jooq\db\tables\EnStatus.class
+org\jooq\db\tables\records\EnFlywaySchemaVersionRecord.class
+org\jooq\db\tables\records\EnStatusRecord.class
+org\jooq\db\tables\EnTask.class
+org\jooq\db\Keys$ForeignKeys0.class
