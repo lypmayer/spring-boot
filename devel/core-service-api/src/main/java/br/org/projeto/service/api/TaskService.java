@@ -4,12 +4,13 @@ import java.util.List;
 
 import br.org.projeto.service.api.dto.TaskDto;
 import br.org.projeto.service.api.exception.ServiceException;
+import br.org.projeto.service.api.exception.validation.ValidationException;
 
 public interface TaskService {
 
-	void register(TaskDto taskDto) throws ServiceException;
+	void save(TaskDto taskDto) throws ServiceException, ValidationException;
 	
-	void edit(TaskDto taskDto) throws ServiceException;
+	void edit(TaskDto taskDto) throws ServiceException, ValidationException;
 	
 	void deleteTaskById(Long taskId) throws ServiceException;
 	

@@ -9,15 +9,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.org.projeto.service.api.TaskService;
 import br.org.projeto.service.api.dto.TaskDto;
 import br.org.projeto.service.api.exception.ServiceException;
+import br.org.projeto.service.api.exception.validation.ValidationException;
 
 @RestController
 @RequestMapping("/tasks")
@@ -28,17 +32,17 @@ public class TaskController {
 	@Autowired
 	private TaskService service;
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@GetMapping(value = "")
 	public ResponseEntity<List<TaskDto>> getTasks() {
 		try {
 			return new ResponseEntity<List<TaskDto>>(new ArrayList<TaskDto>(this.service.getTasks()), HttpStatus.OK);
 		} catch (ServiceException e) {
 			logger.error(e.getMessage(), e);
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<TaskDto> getTask(@RequestParam("id") Long taskId) {
 		try {
 			TaskDto taskDto = this.service.getTaskById(taskId);
@@ -49,40 +53,44 @@ public class TaskController {
 			return new ResponseEntity<TaskDto>(taskDto, HttpStatus.OK);
 		} catch (ServiceException e) {
 			logger.error(e.getMessage(), e);
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@PostMapping(value = "")
 	public ResponseEntity<Object> saveTask(@RequestBody TaskDto taskdto) {
 		try {
-			this.service.register(taskdto);
+			this.service.save(taskdto);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (ServiceException e) {
 			logger.error(e.getMessage(), e);
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (ValidationException e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@PutMapping(value = "")
 	public ResponseEntity<Object> editTask(@RequestBody TaskDto taskdto) {
 		try {
 			this.service.edit(new TaskDto());
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (ServiceException e) {
 			logger.error(e.getMessage(), e);
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (ValidationException e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "{id}")
 	public ResponseEntity<Object> deleteTask(@RequestParam("id") Long taskId) {
 		try {
 			this.service.deleteTaskById(taskId);
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (ServiceException e) {
 			logger.error(e.getMessage(), e);
-			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

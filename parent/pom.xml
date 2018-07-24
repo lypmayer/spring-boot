@@ -60,6 +60,13 @@
 				<artifactId>core-service-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<!-- 3RD PARTY -->
+			<dependency>
+				<groupId>commons-validator</groupId>
+				<artifactId>commons-validator</artifactId>
+				<version>1.6</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 </project>

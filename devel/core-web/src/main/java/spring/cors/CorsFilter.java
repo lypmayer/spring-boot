@@ -1,4 +1,4 @@
-package spring;
+package spring.cors;
 
 import java.io.IOException;
 
