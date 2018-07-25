@@ -1848,3 +1848,69 @@ br.org.projeto.service.api.exception.ServiceException: AAAA
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-8.5.31.jar:8.5.31]
 	at java.lang.Thread.run(Unknown Source) [na:1.8.0_152]
 
+2018-07-25 15:06:24.813  INFO 17836 --- [main] spring.Application                       : Starting Application on Pereque with PID 17836 (C:\Users\Felipe\Desktop\demo\spring-boot\back\devel\core-web\target\classes started by Felipe in C:\Users\Felipe\Desktop\demo\spring-boot\back\devel\core-web)
+2018-07-25 15:06:24.816  INFO 17836 --- [main] spring.Application                       : No active profile set, falling back to default profiles: default
+2018-07-25 15:06:24.852  INFO 17836 --- [main] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@418e7838: startup date [Wed Jul 25 15:06:24 BRT 2018]; root of context hierarchy
+2018-07-25 15:06:25.977  INFO 17836 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2018-07-25 15:06:26.007  INFO 17836 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-07-25 15:06:26.007  INFO 17836 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.31
+2018-07-25 15:06:26.023  INFO 17836 --- [localhost-startStop-1] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jre1.8.0_152\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:/Program Files/Java/jre1.8.0_152/bin/server;C:/Program Files/Java/jre1.8.0_152/bin;C:/Program Files/Java/jre1.8.0_152/lib/amd64;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\TortoiseSVN\bin;C:\ferramentas\apache-maven-3.2.5\bin;C:\ferramentas\gradle-4.4\bin;C:\ferramentas\thrift-0.9.3;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\nodejs\;C:\WINDOWS\System32\OpenSSH\;C:\Users\Felipe\AppData\Local\Microsoft\WindowsApps;C:\Users\Felipe\AppData\Roaming\npm;C:\Program Files\Microsoft VS Code\bin;;C:\ferramentas\itl-react;;.]
+2018-07-25 15:06:26.098  INFO 17836 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-07-25 15:06:26.103  INFO 17836 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1250 ms
+2018-07-25 15:06:26.197  INFO 17836 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+2018-07-25 15:06:26.200  INFO 17836 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-07-25 15:06:26.200  INFO 17836 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-07-25 15:06:26.204  INFO 17836 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-07-25 15:06:26.205  INFO 17836 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-07-25 15:06:26.678  INFO 17836 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-07-25 15:06:26.906  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@418e7838: startup date [Wed Jul 25 15:06:24 BRT 2018]; root of context hierarchy
+2018-07-25 15:06:26.989  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/status/{id}],methods=[GET],consumes=[application/json;charset=UTF-8],produces=[application/json;charset=UTF-8]}" onto public br.org.projeto.service.api.dto.StatusTaskDto br.org.projeto.controller.StatusController.getStatus(java.lang.Long) throws br.org.projeto.service.api.exception.ServiceException
+2018-07-25 15:06:26.990  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/status],methods=[GET],consumes=[application/json;charset=UTF-8],produces=[application/json;charset=UTF-8]}" onto public java.util.List<br.org.projeto.service.api.dto.StatusTaskDto> br.org.projeto.controller.StatusController.getStatus() throws br.org.projeto.service.api.exception.ServiceException
+2018-07-25 15:06:26.991  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/status/{id}],methods=[DELETE],consumes=[application/json;charset=UTF-8],produces=[application/json;charset=UTF-8]}" onto public void br.org.projeto.controller.StatusController.deleteStatus(java.lang.Long) throws br.org.projeto.service.api.exception.ServiceException
+2018-07-25 15:06:26.991  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/status],methods=[PUT],consumes=[application/json;charset=UTF-8],produces=[application/json;charset=UTF-8]}" onto public void br.org.projeto.controller.StatusController.editStatus(br.org.projeto.service.api.dto.TaskDto) throws br.org.projeto.service.api.exception.ServiceException,br.org.projeto.service.api.exception.validation.ValidationException
+2018-07-25 15:06:26.997  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/status],methods=[POST],consumes=[application/json;charset=UTF-8],produces=[application/json;charset=UTF-8]}" onto public void br.org.projeto.controller.StatusController.saveStatus(br.org.projeto.service.api.dto.TaskDto) throws br.org.projeto.service.api.exception.ServiceException,br.org.projeto.service.api.exception.validation.ValidationException
+2018-07-25 15:06:26.999  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/tasks/{id}],methods=[GET],consumes=[application/json;charset=UTF-8],produces=[application/json;charset=UTF-8]}" onto public br.org.projeto.service.api.dto.TaskDto br.org.projeto.controller.TaskController.getTask(java.lang.Long) throws br.org.projeto.service.api.exception.ServiceException
+2018-07-25 15:06:27.000  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/tasks],methods=[POST],consumes=[application/json;charset=UTF-8],produces=[application/json;charset=UTF-8]}" onto public void br.org.projeto.controller.TaskController.saveTask(br.org.projeto.service.api.dto.TaskDto) throws br.org.projeto.service.api.exception.ServiceException,br.org.projeto.service.api.exception.validation.ValidationException
+2018-07-25 15:06:27.000  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/tasks],methods=[PUT],consumes=[application/json;charset=UTF-8],produces=[application/json;charset=UTF-8]}" onto public void br.org.projeto.controller.TaskController.editTask(br.org.projeto.service.api.dto.TaskDto) throws br.org.projeto.service.api.exception.ServiceException,br.org.projeto.service.api.exception.validation.ValidationException
+2018-07-25 15:06:27.004  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/tasks],methods=[GET],consumes=[application/json;charset=UTF-8],produces=[application/json;charset=UTF-8]}" onto public java.util.List<br.org.projeto.service.api.dto.TaskDto> br.org.projeto.controller.TaskController.getTasks() throws br.org.projeto.service.api.exception.ServiceException
+2018-07-25 15:06:27.005  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/tasks/{id}],methods=[DELETE],consumes=[application/json;charset=UTF-8],produces=[application/json;charset=UTF-8]}" onto public void br.org.projeto.controller.TaskController.deleteTask(java.lang.Long) throws br.org.projeto.service.api.exception.ServiceException
+2018-07-25 15:06:27.007  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-07-25 15:06:27.007  INFO 17836 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-07-25 15:06:27.032  INFO 17836 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-07-25 15:06:27.032  INFO 17836 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-07-25 15:06:27.047  INFO 17836 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : Detected @ExceptionHandler methods in globalExceptionController
+2018-07-25 15:06:27.189  INFO 17836 --- [main] o.f.core.internal.util.VersionPrinter    : Flyway Community Edition 5.0.7 by Boxfuse
+2018-07-25 15:06:27.197  INFO 17836 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2018-07-25 15:06:27.371  INFO 17836 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2018-07-25 15:06:27.374  INFO 17836 --- [main] o.f.c.internal.database.DatabaseFactory  : Database: jdbc:mysql://localhost:3306 (MySQL 5.5)
+2018-07-25 15:06:27.415  INFO 17836 --- [main] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.013s)
+2018-07-25 15:06:27.429  INFO 17836 --- [main] o.f.core.internal.command.DbMigrate      : Current version of schema `selecao`: 201807201501
+2018-07-25 15:06:27.430  INFO 17836 --- [main] o.f.core.internal.command.DbMigrate      : Schema `selecao` is up to date. No migration necessary.
+2018-07-25 15:06:27.578  INFO 17836 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-07-25 15:06:27.579  INFO 17836 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Bean with name 'dataSource' has been autodetected for JMX exposure
+2018-07-25 15:06:27.583  INFO 17836 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Located MBean 'dataSource': registering with JMX server as MBean [com.zaxxer.hikari:name=dataSource,type=HikariDataSource]
+2018-07-25 15:06:27.614  INFO 17836 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2018-07-25 15:06:27.618  INFO 17836 --- [main] spring.Application                       : Started Application in 3.099 seconds (JVM running for 3.411)
+2018-07-25 15:07:14.882  INFO 17836 --- [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-07-25 15:07:14.886  INFO 17836 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-07-25 15:07:14.899  INFO 17836 --- [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 12 ms
+2018-07-25 15:07:15.109  INFO 17836 --- [http-nio-8080-exec-2] org.jooq.Constants                       : 
+                                      
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@  @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@  @@  @@    @@@@@@@@@@
+@@@@@@@@@@  @@@@  @@  @@    @@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@
+@@@@@@@@@@    @@  @@  @@@@  @@@@@@@@@@
+@@@@@@@@@@        @@  @  @  @@@@@@@@@@
+@@@@@@@@@@        @@        @@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@  @@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@  Thank you for using jOOQ 3.10.7
+                                      

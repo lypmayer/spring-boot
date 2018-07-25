@@ -6,7 +6,7 @@ class TaskForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {title: null, description: null, status: null};
+        this.state = {title: null, description: null, status: null, listStatus: []};
 
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
         this.handleChangeDescription = this.handleChangeDescription.bind(this);
@@ -15,6 +15,25 @@ class TaskForm extends React.Component {
 
         this.formData = new FormData();
         //this.props.match.params.id
+    }
+
+    componentDidMount() {
+        var authOptions = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            json: true
+          };
+
+        axios.get('http://localhost:8080/status', {
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            }})
+        .then(res => {
+          this.setState({listStatus: res.data});
+        })
     }
 
     handleChangeTitle(e) {
@@ -38,6 +57,7 @@ class TaskForm extends React.Component {
     handleSave(e){
         console.log(this.state);
         let form = this.formData;
+        
         axios.post('http://localhost:8080/tasks', {form})
         .then(res => {
           console.log(res);
@@ -47,7 +67,7 @@ class TaskForm extends React.Component {
 
     render() {
         //console.log(this.props.match.params.id);
-        
+        console.log(this.state);
         return (
             <span>
                 <Form>

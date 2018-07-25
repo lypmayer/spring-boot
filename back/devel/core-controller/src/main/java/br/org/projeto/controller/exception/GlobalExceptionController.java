@@ -33,6 +33,7 @@ public class GlobalExceptionController extends ResponseEntityExceptionHandler {
 
 	private ErrorMessage processErroDetail(final Exception ex) {
 		final ErrorMessage errorMessage = new ErrorMessage(ex.getMessage());
+		
 		if (ex instanceof ValidationException) {
 			ValidationException validationException = (ValidationException) ex;
 			errorMessage.setCode(ValidationException.ERROR_CODE);

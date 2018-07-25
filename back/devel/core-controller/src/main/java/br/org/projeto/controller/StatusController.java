@@ -14,41 +14,41 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.org.projeto.service.api.TaskService;
+import br.org.projeto.service.api.StatusService;
+import br.org.projeto.service.api.dto.StatusTaskDto;
 import br.org.projeto.service.api.dto.TaskDto;
 import br.org.projeto.service.api.exception.ServiceException;
 import br.org.projeto.service.api.exception.validation.ValidationException;
 
 @RestController
-@RequestMapping(path = "/tasks", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-public class TaskController {
-
+@RequestMapping(path = "/status", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+public class StatusController {
 
 	@Autowired
-	private TaskService service;
+	private StatusService service;
 
 	@GetMapping(value = "")
-	public @ResponseBody List<TaskDto> getTasks() throws ServiceException {
-		return this.service.getTasks();
+	public @ResponseBody List<StatusTaskDto> getStatus() throws ServiceException {
+		return this.service.getListStatus();
 	}
 
 	@GetMapping(value = "/{id}")
-	public @ResponseBody TaskDto getTask(@RequestParam("id") Long taskId) throws ServiceException {
-		return this.service.getTaskById(taskId);
+	public @ResponseBody StatusTaskDto getStatus(@RequestParam("id") Long statusId) throws ServiceException {
+		throw new UnsupportedOperationException();
 	}
 
 	@PostMapping(value = "")
-	public void saveTask(@RequestBody TaskDto taskdto) throws ServiceException, ValidationException {
-		this.service.save(taskdto);
+	public void saveStatus(@RequestBody TaskDto taskdto) throws ServiceException, ValidationException {
+		throw new UnsupportedOperationException();
 	}
 
 	@PutMapping(value = "")
-	public void editTask(@RequestBody TaskDto taskdto) throws ServiceException, ValidationException {
-		this.service.edit(taskdto);
+	public void editStatus(@RequestBody TaskDto taskdto) throws ServiceException, ValidationException {
+		throw new UnsupportedOperationException();
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public void deleteTask(@RequestParam("id") Long taskId) throws ServiceException {
-		this.service.deleteTaskById(taskId);
+	public void deleteStatus(@RequestParam("id") Long statusId) throws ServiceException {
+		throw new UnsupportedOperationException();
 	}
 }
