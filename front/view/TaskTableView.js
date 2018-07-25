@@ -1,10 +1,7 @@
 import React from 'react';
 import { Table, Button, Jumbotron } from 'reactstrap';
 import 'font-awesome/css/font-awesome.min.css';
-import {
-    Link
-  } from 'react-router-dom'
-  
+
 class TaskTableView extends React.Component {
 
     constructor(props) {
@@ -56,13 +53,16 @@ class TaskTableView extends React.Component {
     }
 
     render() {
+        /*
+         <Link to="/register">
+                        
+                    </Link>
+        */
         let content = (
             <Jumbotron className="text-center">
                 <h1 className="display-3">Nenhuma tarefa cadastrada!</h1>
                 <p className="lead">
-                    <Link to="/register">
-                        <Button color="primary">Cadastrar Tarefa</Button>
-                    </Link>
+                    <a href="#/register"><Button color="primary">Cadastrar Tarefa</Button></a>
                 </p>
             </Jumbotron>
         );

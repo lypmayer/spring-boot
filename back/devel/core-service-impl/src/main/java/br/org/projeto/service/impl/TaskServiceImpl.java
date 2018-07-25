@@ -100,8 +100,6 @@ public class TaskServiceImpl extends ServiceImplCommon implements TaskService{
 
 	@Override
 	public List<TaskDto> getTasks() throws ServiceException {
-		this.getMessage("task.validation.title.min");
-		
 		try {
 			final List<Field<?>> fields = new ArrayList<>();
 			fields.add(EN_TASK.SEQ_TASK);
@@ -133,6 +131,9 @@ public class TaskServiceImpl extends ServiceImplCommon implements TaskService{
 				ValidationMin.min(3, this.getMessage("task.validation.description.min")),
 				ValidationMax.max(50, this.getMessage("task.validation.description.min")));
 
+		
+		validation.setRules("status", taskDto.getStatusTask(), required(this.getMessage("task.validation.status.required")));
+		validation.setRules("status", taskDto.getStatusTask().getId(), required(this.getMessage("task.validation.status.required")));
 		validation.validateAndThrows();
 	}
 }

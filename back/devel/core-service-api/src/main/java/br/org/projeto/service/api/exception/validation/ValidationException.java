@@ -11,7 +11,9 @@ import java.util.Map.Entry;
 import br.org.projeto.service.api.exception.validation.ValidationResponse.ValidationCallBack;
 
 public class ValidationException extends Exception {
-
+	
+	public static final Integer ERROR_CODE = 1;
+	
 	private static final long serialVersionUID = 1L;
 
 	private String key;
