@@ -16,5 +16,5 @@ public interface TaskService {
 	
 	TaskDto getTaskById(Long taskId) throws ServiceException;
 	
-	List<TaskDto> getTasks() throws ServiceException;
+	List<TaskDto> getListTasks() throws ServiceException;
 }

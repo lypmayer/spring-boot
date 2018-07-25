@@ -99,7 +99,7 @@ public class TaskServiceImpl extends ServiceImplCommon implements TaskService{
 	}
 
 	@Override
-	public List<TaskDto> getTasks() throws ServiceException {
+	public List<TaskDto> getListTasks() throws ServiceException {
 		try {
 			final List<Field<?>> fields = new ArrayList<>();
 			fields.add(EN_TASK.SEQ_TASK);

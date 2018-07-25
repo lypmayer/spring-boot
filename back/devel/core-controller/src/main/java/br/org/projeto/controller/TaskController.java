@@ -29,7 +29,7 @@ public class TaskController {
 
 	@GetMapping(value = "")
 	public @ResponseBody List<TaskDto> getTasks() throws ServiceException {
-		return this.service.getTasks();
+		return this.service.getListTasks();
 	}
 
 	@GetMapping(value = "/{id}")
