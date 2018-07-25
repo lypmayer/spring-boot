@@ -1,0 +1,38 @@
+{
+  "name": "itl",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "~4.0.0",
+    "emoji-mart": "^2.6.1",
+    "eslint": "^4.19.1",
+    "flag-icon-css": "~2.9.0",
+    "font-awesome": "^4.7.0",
+    "history": "^4.7.2",
+    "moment": "^2.22.2",
+    "npm": "^5.10.0",
+    "prop-types": "^15.6.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.0",
+    "react-select": "^1.2.1",
+    "reactstrap": "^5.0.0",
+    "serviceworker-webpack-plugin": "^0.2.3"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --progress --color --inline --env.dev --config ./webpack.config.dev.js"
+  },
+  "engines": {
+    "node": ">= 8.9.4",
+    "npm": ">= 5.6.0"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.5.2",
+    "css-hot-loader": "^1.4.0",
+    "html-loader": "^0.5.5",
+    "node-sass": "^4.9.2",
+    "sass-loader": "^6.0.7"
+  }
+}
