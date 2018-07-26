@@ -1,94 +1,105 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, Alert, FormText, Jumbotron } from 'reactstrap';
-import axios from 'axios';
 import classNames from 'classnames';
+import axios from 'axios';
+import fw from '../src/common/fw';
+import FeedbackPanel from './widgets/FeedbackPanel';
+import {hashHistory} from 'react-router';
 
 class TaskForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { title: null, description: null, status: null, listStatus: [], validation: { messages: [], validationMessages: [] } };
+        this.state = {taskId: this.props.params.id, title: null, description: null, status: null, task: null, listStatus: [], validation: { messages: [], validationMessages: [] } };
 
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
         this.handleChangeDescription = this.handleChangeDescription.bind(this);
         this.handleSelectStatus = this.handleSelectStatus.bind(this);
-        this.handleSave = this.handleSave.bind(this);
-
-        this.formData = new FormData();
+        this.handleSaveUpdate = this.handleSaveUpdate.bind(this);
     }
 
     componentDidMount() {
-        axios.get('http://localhost:8080/status')
-            .then(res => {
-                this.state.listStatus = res.data;
-                this.forceUpdate();
-            });
+        axios.get(fw.getHostUrl() + '/status')
+        .then(response => {
+            this.state.listStatus = response.data;
+            this.forceUpdate();
+
+            if(this.state.taskId){
+                axios.get(fw.getHostUrl() + '/tasks/' + this.state.taskId)
+                .then(response => {
+                    this.state.task = response.data;
+                    this.state.title = this.state.task.title;
+                    this.state.description = this.state.task.description;
+                    this.state.status = this.state.task.statusTask.id;
+                    this.forceUpdate();
+                })
+                .catch((error) => {
+                    this.setState({error: error});
+                });
+            }
+        })
+        .catch((error) => {
+            this.setState({error: error});
+        });    
     }
 
     handleChangeTitle(e) {
         this.state.title = e.target.value;
         this.forceUpdate();
-        this.formData["title"] = this.state.title;
     }
 
     handleChangeDescription(e) {
         this.state.description = e.target.value;
         this.forceUpdate();
-        this.formData["description"] = this.state.description;
     }
 
     handleSelectStatus(e) {
         this.state.status = e.target.value;
         this.forceUpdate();
+    }
 
+    handleSaveUpdate(e) {
         let formDataStatus = new FormData();
         formDataStatus['id'] = this.state.status;
 
-        this.formData["statusTask"] = formDataStatus;
-    }
+        let formData = new FormData();
+        formData["title"] = this.state.title;
+        formData["description"] = this.state.description;
+        formData["statusTask"] = formDataStatus;
 
-    handleSave(e) {
-        axios.post('http://localhost:8080/tasks', JSON.stringify(this.formData), {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => {
-            console.log(response);
-        })
-        .catch((error) => {
-            // Error
-            if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                // console.log(error.response.data);
-                // console.log(error.response.status);
-                // console.log(error.response.headers);
+        if(this.state.task){
+            formData["id"] = this.state.task.id;
 
-                let code = error.response.data.code || 0;
-                if (code == 1) {
-                    this.state.validation = error.response.data.validation;
-                    this.forceUpdate();
-                }else if(code == 2){
-                    alert(error.response.data.message);
-                }else{
-                    alert(error.message);
+            axios.put(fw.getHostUrl() + '/tasks', JSON.stringify(formData), {
+                headers: {
+                    'Content-Type': 'application/json',
                 }
-            } else if (error.request) {
-                // The request was made but no response was received
-                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                // http.ClientRequest in node.js
-                console.log("aa", error.request);
-            } else {
-                // Something happened in setting up the request that triggered an Error
-                console.log('Error', error.message);
-            }
-        });
+            })
+            .then(response => {
+                hashHistory.push('#/list');
+            })
+            .catch((error) => {
+                this.setState({error: error})
+            });
+        }else{
+            axios.post(fw.getHostUrl() + '/tasks', JSON.stringify(formData), {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                hashHistory.push('#/list');
+            })
+            .catch((error) => {
+                this.setState({error: error})
+            });
+        }
+        
     }
 
     fillOptions() {
         let options = [];
-        options.push(<option key={0} selected disabled>{'Selecione um status'}</option>);
+        options.push(<option key={0} selected disabled value={0}>{'Selecione um status'}</option>);
         this.state.listStatus.forEach(status => {
             options.push(<option key={status.id} value={status.id}>{status.name}</option>);
         });
@@ -97,61 +108,40 @@ class TaskForm extends React.Component {
     }
 
     getActiveClassState(id) {
-        if (id in this.state.validation.validationMessages) {
-            return classNames('form-control', 'invalid', 'is-invalid');
-        } else {
-            return classNames('form-control');
-        }
+        return fw.getActiveClassState(this.state.error, id);
     }
 
     render() {
         let view = null;    
         if (this.state.listStatus.length > 0) {
-            let messages = this.state.validation.messages;
-
-            let painelValidation = null;
-            if (messages.length > 0) {
-                let listSpan = [];
-                messages.forEach(message => {
-                    listSpan.push(<div key={message}>{message}</div>);
-                });
-
-
-                painelValidation = (
-                    <Alert color="danger">
-                        {listSpan}
-                    </Alert>
-                );
-            }
-
             view = (
                 <span>
-                    {painelValidation}
+                    <FeedbackPanel error={this.state.error}/>
                     <Form>
                         <FormGroup>
-                            <Label for="exampleEmail">Titulo</Label>
-                            <Input type="text" name="title" placeholder="Titulo da tarefa" className={this.getActiveClassState("title")} onChange={this.handleChangeTitle} />
+                            <Label>Título</Label>
+                            <Input type="text" name="title" placeholder="Titulo da tarefa" className={this.getActiveClassState("title")} onChange={this.handleChangeTitle} value={this.state.title || ""} />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="exampleText">Descrição</Label>
-                            <Input type="textarea" name="description" placeholder="Descrição da tarefa" className={this.getActiveClassState("description")} onChange={this.handleChangeDescription} />
+                            <Label>Descrição</Label>
+                            <Input type="textarea" name="description" placeholder="Descrição da tarefa" className={this.getActiveClassState("description")} onChange={this.handleChangeDescription} value={this.state.description || ""} />
                         </FormGroup>
                         <FormGroup>
-                            <Label for="exampleSelect">Status</Label>
-                            <Input type="select" name="status" className={this.getActiveClassState("status")} onChange={this.handleSelectStatus}>
+                            <Label>Status</Label>
+                            <Input type="select" name="status" className={this.getActiveClassState("status")} onChange={this.handleSelectStatus} value={this.state.status || 0}>
                                 {this.fillOptions()}
                             </Input>
                         </FormGroup>
                     </Form>
                     <div>
                         <a href="#/list"><Button color="danger">Voltar</Button></a>{' '}
-                        <Button color="success" onClick={this.handleSave}>Cadastrar</Button>
+                        <Button color="success" onClick={this.handleSaveUpdate}>{this.state.task ? 'Editar' : 'Cadastrar'}</Button>
                     </div>
                 </span>);
         }else{
             view = (
                 <Jumbotron className="text-center">
-                    <h1 className="display-3">Não é possivel criar tarefa, nenhum status registrado!</h1>
+                    <h1 className="display-3">Não é possivel criar uma tarefa, nenhum status registrado!</h1>
                     <p className="lead">
                         <a href="#/list"><Button color="primary">Voltar para lista</Button></a>
                     </p>

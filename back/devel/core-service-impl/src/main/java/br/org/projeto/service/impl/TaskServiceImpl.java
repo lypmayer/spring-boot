@@ -13,6 +13,7 @@ import org.jooq.DSLContext;
 import org.jooq.Field;
 import org.jooq.Record;
 import org.jooq.Result;
+import org.jooq.db.tables.EnStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,10 +58,12 @@ public class TaskServiceImpl extends ServiceImplCommon implements TaskService{
 		this.validate(taskDto);
 
 		try {
-			this.dsl.update(EN_TASK).set(EN_TASK.TITLE, taskDto.getTitle())
-					.set(EN_TASK.DESCRIPTION, taskDto.getDescription())
-					.set(EN_TASK.SEQ_EN_STATUS, taskDto.getStatusTask().getId())
-					.where(EN_TASK.SEQ_EN_STATUS.eq(taskDto.getId())).execute();
+			this.dsl.update(EN_TASK)
+				.set(EN_TASK.TITLE, taskDto.getTitle())
+				.set(EN_TASK.DESCRIPTION, taskDto.getDescription())
+				.set(EN_TASK.SEQ_EN_STATUS, taskDto.getStatusTask().getId())
+				.where(EN_TASK.SEQ_TASK.eq(taskDto.getId()))
+				.execute();
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -86,14 +89,14 @@ public class TaskServiceImpl extends ServiceImplCommon implements TaskService{
 			fields.add(EN_TASK.SEQ_TASK);
 			fields.add(EN_TASK.TITLE);
 			fields.add(EN_TASK.DESCRIPTION);
-			fields.add(EN_TASK.SEQ_EN_STATUS);
+			fields.add(EN_STATUS.SEQ_STATUS);
 			fields.add(EN_STATUS.NAME);
 
 			Record record = this.dsl.select(fields).from(EN_TASK).join(EN_STATUS)
 					.on(EN_STATUS.SEQ_STATUS.eq(EN_TASK.SEQ_EN_STATUS)).where(EN_TASK.SEQ_TASK.eq(taskId)).fetchOne();
 
 			if (record != null) {
-				ParserDto.toTaskDto().apply(record);
+				return ParserDto.toTaskDto().apply(record);
 			}
 
 			return null;
@@ -113,7 +116,7 @@ public class TaskServiceImpl extends ServiceImplCommon implements TaskService{
 			fields.add(EN_STATUS.NAME);
 
 			Result<Record> result = this.dsl.select(fields).from(EN_TASK).join(EN_STATUS)
-					.on(EN_STATUS.SEQ_STATUS.eq(EN_TASK.SEQ_EN_STATUS)).fetch();
+					.on(EN_STATUS.SEQ_STATUS.eq(EN_TASK.SEQ_EN_STATUS)).orderBy(EN_TASK.SEQ_TASK.asc()).fetch();
 
 			if (result.isEmpty()) {
 				return Collections.emptyList();
@@ -131,9 +134,9 @@ public class TaskServiceImpl extends ServiceImplCommon implements TaskService{
 				ValidationMin.min(3, this.getMessage("task.validation.title.min")),
 				ValidationMax.max(50, this.getMessage("task.validation.title.max")));
 		
-		validation.setRules("description", taskDto.getDescription(), required(this.getMessage("task.validation.description.min")),
+		validation.setRules("description", taskDto.getDescription(), required(this.getMessage("task.validation.description.required")),
 				ValidationMin.min(3, this.getMessage("task.validation.description.min")),
-				ValidationMax.max(50, this.getMessage("task.validation.description.min")));
+				ValidationMax.max(500, this.getMessage("task.validation.description.max")));
 
 		
 		String msgRequiredStatus = this.getMessage("task.validation.status.required");

@@ -34,7 +34,7 @@ public class TaskController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public @ResponseBody TaskDto getTask(@PathVariable("") Long id) throws ServiceException {
+	public @ResponseBody TaskDto getTask(@PathVariable Long id) throws ServiceException {
 		return this.service.getTaskById(id);
 	}
 

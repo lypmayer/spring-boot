@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,16 +36,16 @@ public class StatusController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public @ResponseBody StatusTaskDto getStatus(@RequestParam("id") Long statusId) throws ServiceException {
+	public @ResponseBody StatusTaskDto getStatus(@PathVariable Long statusId) throws ServiceException {
 		throw new UnsupportedOperationException();
 	}
 
-	@PostMapping(value = "")
+	@PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void saveStatus(@RequestBody TaskDto taskdto) throws ServiceException, ValidationException {
 		throw new UnsupportedOperationException();
 	}
 
-	@PutMapping(value = "")
+	@PutMapping(value = "", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void editStatus(@RequestBody TaskDto taskdto) throws ServiceException, ValidationException {
 		throw new UnsupportedOperationException();
 	}

@@ -26,12 +26,17 @@ public class GlobalExceptionController extends ResponseEntityExceptionHandler {
 		HEADERS.setContentType(MediaType.APPLICATION_JSON);
 	}
 
-	@ExceptionHandler({Exception.class, RuntimeException.class, ServiceException.class, ValidationException.class})
-	public ResponseEntity<Object> waycoException(final Exception ex, final WebRequest request) {
+	@ExceptionHandler({Exception.class, RuntimeException.class, ServiceException.class})
+	public ResponseEntity<Object> projectException(final Exception ex, final WebRequest request) {
 		LOGGER.error(MarkerFactory.getMarker(ex.getClass().getName()), ex.getMessage(), ex);
 		return this.handleExceptionInternal(ex, this.processErroDetail(ex), HEADERS, HttpStatus.INTERNAL_SERVER_ERROR, request);
 	}
 
+	@ExceptionHandler({ValidationException.class})
+	public ResponseEntity<Object> projectExceptionValidation(final ValidationException ex, final WebRequest request) {
+		return this.handleExceptionInternal(ex, this.processErroDetail(ex), HEADERS, HttpStatus.INTERNAL_SERVER_ERROR, request);
+	}
+	
 	private ErrorMessage processErroDetail(final Exception ex) {
 		final ErrorMessage errorMessage = new ErrorMessage(ex.getMessage());
 		

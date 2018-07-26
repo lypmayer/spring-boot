@@ -95,7 +95,6 @@ module.exports = (env = {}) => {
     plugins: [
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('development'),
-        'process.env.RECAPTCHA_KEY': JSON.stringify('6LeDiksUAAAAAAsQ3SaKn7HSWDOKe5z9kFJ4afCC'),
         "process.env.GA_KEY": JSON.stringify("UA-119920405-1")
       }),
       new webpack.HotModuleReplacementPlugin(),

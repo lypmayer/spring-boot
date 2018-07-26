@@ -1,82 +1,60 @@
 import React from 'react';
-import { Table, Button, Jumbotron } from 'reactstrap';
+import { Table, Button, Jumbotron, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import 'font-awesome/css/font-awesome.min.css';
 import axios from 'axios';
+import fw from '../src/common/fw';
+import FeedbackPanel from './widgets/FeedbackPanel';
 
 class TaskTableView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { tasks: [] };
+        this.state = {tasks: [], modal: false, taskId: null};
         this.getDetails = this.getDetails.bind(this);
-
-        this.handleEdit = this.handleEdit.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
-    }
-
-    handleEdit(e){
-        console.log(e);
-    }
-    
-    handleDelete(e){
-        axios.delete('http://localhost:8080/tasks/' + e.target.id, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => {
-            this.getDetails();
-        })
-        .catch((error) => {
-            // Error
-            if (error.response) {
-                let code = error.response.data.code || 0;
-                if (code == 1) {
-                    this.state.validation = error.response.data.validation;
-                    this.forceUpdate();
-                }
-                console.log("aaaaaa", error.response);
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                // console.log(error.response.data);
-                // console.log(error.response.status);
-                // console.log(error.response.headers);
-            } else if (error.request) {
-                // The request was made but no response was received
-                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                // http.ClientRequest in node.js
-                console.log("aa", error.request);
-            } else {
-                // Something happened in setting up the request that triggered an Error
-                console.log('Error', error.message);
-            }
-        });
+        this.toggle = this.toggle.bind(this);
     }
 
     componentDidMount() {
         this.getDetails();
     }
 
+    toggle(e) {
+        if(!this.state.modal){
+            this.setState({modal: true, taskId: e.target.id});
+        }else{
+            this.setState({modal: false, taskId: null});
+        }
+    }
+    
+    handleDelete(e){
+        if(this.state.taskId){
+            this.toggle();
+            axios.delete(fw.getHostUrl() + '/tasks/' + this.state.taskId, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                this.getDetails();
+            })
+            .catch((error) => {
+                this.setState({error: error})
+            });
+        }
+    }
+
     getDetails() {
-        const URL_TO_FETCH = 'http://localhost:8080/tasks/';
-        fetch(URL_TO_FETCH, {
-            method: 'get' // opcional 
+        axios.get(fw.getHostUrl() + '/tasks')
+        .then(response => {
+            this.setState({tasks: response.data})
         })
-        .then(response => response.json())
-        .then(data => {
-            this.setState({ tasks: data });
-        })
-        .catch(function (object) {
-            console.log(object.type, object.message)
+        .catch((error) => {
+            this.setState({error: error})
         });
     }
 
     render() {
-        /*
-         <Link to="/register">
-                        
-                    </Link>
-        */
         let content = (
             <Jumbotron className="text-center">
                 <h1 className="display-3">Nenhuma tarefa cadastrada!</h1>
@@ -90,7 +68,13 @@ class TaskTableView extends React.Component {
             content = this.renderTable();
         }
         
-        return (content);
+        return (
+            <span>
+                <FeedbackPanel error={this.state.error}/>        
+                {this.renderModal()}
+                {content}
+            </span>
+            );
     }
 
     renderTable() {
@@ -104,8 +88,8 @@ class TaskTableView extends React.Component {
                     <td>{task.title}</td>
                     <td>{task.statusTask.name}</td>
                     <td>
-                        <Button color="warning" onClick={this.handleEdit} id={task.id}>Editar</Button>{' '}
-                        <Button color="danger" onClick={this.handleDelete} id={task.id}>Excluir</Button>
+                        <a href={'#/edit/' + task.id}><Button color="warning">Editar</Button></a>{' '}
+                        <Button color="danger" onClick={this.toggle} id={task.id}>Excluir</Button>
                     </td>
                 </tr>
             );
@@ -114,10 +98,13 @@ class TaskTableView extends React.Component {
         return (
             <div>
                 <h1>Lista de tarefas</h1>
+                <p>
+                    <a href="#/register"><Button color="success">Cadastrar Tarefa</Button></a>
+                </p>
                 <Table>
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Id</th>
                             <th>Nome</th>
                             <th>Status</th>
                             <th>Ações</th>
@@ -129,6 +116,23 @@ class TaskTableView extends React.Component {
                 </Table>
             </div>
         )
+    }
+
+    renderModal() {
+        return (
+        <div>
+            <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+            <ModalHeader toggle={this.toggle}>Excluir tarefa</ModalHeader>
+            <ModalBody>
+                Deseja realmente excluir a tarefa?
+            </ModalBody>
+            <ModalFooter>
+                <Button color="danger" onClick={this.toggle}>Não</Button>{' '}
+                <Button color="success" onClick={this.handleDelete}>Sim</Button>
+            </ModalFooter>
+            </Modal>
+        </div>
+        );
     }
 }
 
