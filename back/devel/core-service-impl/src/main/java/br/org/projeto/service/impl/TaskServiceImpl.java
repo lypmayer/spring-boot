@@ -17,13 +17,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.org.projeto.service.api.TaskService;
+import br.org.projeto.service.api.dto.StatusTaskDto;
 import br.org.projeto.service.api.dto.TaskDto;
 import br.org.projeto.service.api.exception.ServiceException;
 import br.org.projeto.service.api.exception.validation.ValidationException;
+import br.org.projeto.service.api.exception.validation.ValidationResponse;
+import br.org.projeto.service.api.exception.validation.ValidationType;
 import br.org.projeto.service.impl.util.ParserDto;
 import br.org.projeto.service.validator.Validator;
 import br.org.projeto.service.validator.validation.ValidationMax;
 import br.org.projeto.service.validator.validation.ValidationMin;
+import br.org.projeto.service.validator.validation.common.ValidationCustom;
 
 @Service
 public class TaskServiceImpl extends ServiceImplCommon implements TaskService{
@@ -132,8 +136,15 @@ public class TaskServiceImpl extends ServiceImplCommon implements TaskService{
 				ValidationMax.max(50, this.getMessage("task.validation.description.min")));
 
 		
-		validation.setRules("status", taskDto.getStatusTask(), required(this.getMessage("task.validation.status.required")));
-		validation.setRules("status", taskDto.getStatusTask().getId(), required(this.getMessage("task.validation.status.required")));
+		String msgRequiredStatus = this.getMessage("task.validation.status.required");
+		validation.setRules("status", taskDto.getStatusTask(), required(msgRequiredStatus), new ValidationCustom<StatusTaskDto>() {
+			@Override
+			public void validate(String key, StatusTaskDto statusTaskDto, ValidationResponse throwerValidations) {
+				if(statusTaskDto.getId() == null) {
+					throwerValidations.addValidationType(key, ValidationType.REQUIRED, msgRequiredStatus);
+				}
+			}
+		});
 		validation.validateAndThrows();
 	}
 }

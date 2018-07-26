@@ -86,6 +86,19 @@ public class ValidationException extends Exception {
 		return message.toString();
 	}
 
+	public List<String> getListMessageText() {
+		final List<String> listMessage = new ArrayList<String>();
+		if (this.validationsMap != null && this.validationsMap.size() > 0) {
+			final Iterator<String> it = this.validationsMap.keySet().iterator();
+			while (it.hasNext()) {
+				final String key = it.next();
+				listMessage.add(this.validationsMap.get(key).getMessage());
+			}
+		}
+
+		return listMessage;
+	}
+	
 	public String getMessageText() {
 		final StringBuilder message = new StringBuilder();
 		if (this.validationsMap != null && this.validationsMap.size() > 0) {

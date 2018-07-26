@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
--- Versão do servidor:           10.1.28-MariaDB - mariadb.org binary distribution
+-- Versão do servidor:           10.1.25-MariaDB - mariadb.org binary distribution
 -- OS do Servidor:               Win32
--- HeidiSQL Versão:              9.5.0.5226
+-- HeidiSQL Versão:              9.4.0.5125
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -13,18 +13,23 @@
 
 
 -- Copiando estrutura do banco de dados para selecao
-CREATE DATABASE IF NOT EXISTS `selecao` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE IF NOT EXISTS `selecao` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `selecao`;
 
 -- Copiando estrutura para tabela selecao.en_status
 CREATE TABLE IF NOT EXISTS `en_status` (
-  `seq_status` bigint(20) NOT NULL,
-  `name` varchar(50) NOT NULL DEFAULT '0',
+  `seq_status` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
   PRIMARY KEY (`seq_status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela selecao.en_status: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela selecao.en_status: ~3 rows (aproximadamente)
+DELETE FROM `en_status`;
 /*!40000 ALTER TABLE `en_status` DISABLE KEYS */;
+INSERT INTO `en_status` (`seq_status`, `name`) VALUES
+	(1, 'Aberto'),
+	(2, 'Andamento'),
+	(3, 'Finalizado');
 /*!40000 ALTER TABLE `en_status` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela selecao.en_task
@@ -39,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `en_task` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Copiando dados para a tabela selecao.en_task: ~0 rows (aproximadamente)
+DELETE FROM `en_task`;
 /*!40000 ALTER TABLE `en_task` DISABLE KEYS */;
 /*!40000 ALTER TABLE `en_task` ENABLE KEYS */;
 

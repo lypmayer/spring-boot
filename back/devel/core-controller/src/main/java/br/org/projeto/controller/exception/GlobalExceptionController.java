@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import br.org.projeto.controller.exception.ErrorMessage.Validation;
 import br.org.projeto.service.api.exception.ServiceException;
 import br.org.projeto.service.api.exception.validation.ValidationException;
 
@@ -37,7 +38,9 @@ public class GlobalExceptionController extends ResponseEntityExceptionHandler {
 		if (ex instanceof ValidationException) {
 			ValidationException validationException = (ValidationException) ex;
 			errorMessage.setCode(ValidationException.ERROR_CODE);
-			errorMessage.setValidationMessages(validationException.getDougleMapMessagesByField());
+			
+			Validation validation = new Validation(validationException.getListMessageText(), validationException.getDougleMapMessagesByField());
+			errorMessage.setValidation(validation);
 		}else if (ex instanceof ServiceException) {
 			errorMessage.setCode(ServiceException.ERROR_CODE);
 		}

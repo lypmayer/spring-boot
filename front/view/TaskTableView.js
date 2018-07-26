@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Button, Jumbotron } from 'reactstrap';
 import 'font-awesome/css/font-awesome.min.css';
+import axios from 'axios';
 
 class TaskTableView extends React.Component {
 
@@ -18,7 +19,38 @@ class TaskTableView extends React.Component {
     }
     
     handleDelete(e){
-        console.log(e);
+        axios.delete('http://localhost:8080/tasks/' + e.target.id, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => {
+            this.getDetails();
+        })
+        .catch((error) => {
+            // Error
+            if (error.response) {
+                let code = error.response.data.code || 0;
+                if (code == 1) {
+                    this.state.validation = error.response.data.validation;
+                    this.forceUpdate();
+                }
+                console.log("aaaaaa", error.response);
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                // console.log(error.response.data);
+                // console.log(error.response.status);
+                // console.log(error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                console.log("aa", error.request);
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+            }
+        });
     }
 
     componentDidMount() {
@@ -26,7 +58,6 @@ class TaskTableView extends React.Component {
     }
 
     getDetails() {
-        console.log("222");
         const URL_TO_FETCH = 'http://localhost:8080/tasks/';
         fetch(URL_TO_FETCH, {
             method: 'get' // opcional 
@@ -38,18 +69,6 @@ class TaskTableView extends React.Component {
         .catch(function (object) {
             console.log(object.type, object.message)
         });
-
-        /*
-        .then(function (response) {
-            var contentType = response.headers.get("content-type");
-            if (contentType && contentType.indexOf("application/json") !== -1) {
-                response.json().then(function (json) {
-                    return json;
-                });
-            } else {
-                console.log("Oops, we haven't got JSON!");
-            }
-        })*/
     }
 
     render() {
@@ -85,8 +104,8 @@ class TaskTableView extends React.Component {
                     <td>{task.title}</td>
                     <td>{task.statusTask.name}</td>
                     <td>
-                        <Button color="warning" onClick={this.handleEdit}>Editar</Button>{' '}
-                        <Button color="danger" onClick={this.handleDelete}>Excluir</Button>
+                        <Button color="warning" onClick={this.handleEdit} id={task.id}>Editar</Button>{' '}
+                        <Button color="danger" onClick={this.handleDelete} id={task.id}>Excluir</Button>
                     </td>
                 </tr>
             );
@@ -94,7 +113,7 @@ class TaskTableView extends React.Component {
 
         return (
             <div>
-                <h1>Lista de tasks</h1>
+                <h1>Lista de tarefas</h1>
                 <Table>
                     <thead>
                         <tr>

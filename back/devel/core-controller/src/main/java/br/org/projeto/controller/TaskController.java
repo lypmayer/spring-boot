@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,9 +21,9 @@ import br.org.projeto.service.api.exception.ServiceException;
 import br.org.projeto.service.api.exception.validation.ValidationException;
 
 @RestController
-@RequestMapping(path = "/tasks", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@CrossOrigin(allowCredentials="true")
+@RequestMapping(path = "/tasks", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class TaskController {
-
 
 	@Autowired
 	private TaskService service;
@@ -33,22 +34,22 @@ public class TaskController {
 	}
 
 	@GetMapping(value = "/{id}")
-	public @ResponseBody TaskDto getTask(@RequestParam("id") Long taskId) throws ServiceException {
-		return this.service.getTaskById(taskId);
+	public @ResponseBody TaskDto getTask(@PathVariable("") Long id) throws ServiceException {
+		return this.service.getTaskById(id);
 	}
 
-	@PostMapping(value = "")
+	@PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void saveTask(@RequestBody TaskDto taskdto) throws ServiceException, ValidationException {
 		this.service.save(taskdto);
 	}
 
-	@PutMapping(value = "")
+	@PutMapping(value = "", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public void editTask(@RequestBody TaskDto taskdto) throws ServiceException, ValidationException {
 		this.service.edit(taskdto);
 	}
 
 	@DeleteMapping(value = "/{id}")
-	public void deleteTask(@RequestParam("id") Long taskId) throws ServiceException {
-		this.service.deleteTaskById(taskId);
+	public void deleteTask(@PathVariable Long id) throws ServiceException {
+		this.service.deleteTaskById(id);
 	}
 }
