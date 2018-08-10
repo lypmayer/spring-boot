@@ -18,7 +18,6 @@
 4 - Projeto rodando na porta 8081.</br>
 
 <h1>Falta no back </h1>
-1 - Avaliar questão do cors.</br>
 2 - Criar os testes.</br>
 3 - Criar trigger para armazenar histórico das tarefas.</br>
 4 - Criar profile no maven para fazer deploy do front junto ao back-end.</br>
