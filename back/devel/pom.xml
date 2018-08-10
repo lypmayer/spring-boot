@@ -16,11 +16,10 @@
 	</parent>
 
 	<modules>
-		<module>core-flyway</module>	
-		<module>core-jooq</module>
-		<module>core-controller</module>
-		<module>core-web</module>
-		<module>core-service-api</module>
-		<module>core-service-impl</module>
+		<module>controller</module>
+		<module>service-api</module>
+		<module>service-impl</module>
+		<module>service-jooq-flyway</module>
+		<module>web</module>
 	</modules>
 </project>

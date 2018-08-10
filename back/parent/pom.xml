@@ -17,6 +17,7 @@
 	</parent>
 
 	<properties>
+		<java.version>1.8</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -37,27 +38,22 @@
 			<!-- CORE -->
 			<dependency>
 				<groupId>br.org.demo</groupId>
-				<artifactId>core-flyway</artifactId>
+				<artifactId>controller</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>br.org.demo</groupId>
-				<artifactId>core-jooq</artifactId>
+				<artifactId>service-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>br.org.demo</groupId>
-				<artifactId>core-controller</artifactId>
+				<artifactId>service-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>br.org.demo</groupId>
-				<artifactId>core-service-api</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>br.org.demo</groupId>
-				<artifactId>core-service-impl</artifactId>
+				<artifactId>service-jooq-flyway</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
