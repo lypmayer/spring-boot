@@ -18,9 +18,9 @@
 4 - Projeto rodando na porta 8081.</br>
 
 <h1>Falta no back </h1>
-2 - Criar os testes.</br>
-3 - Criar trigger para armazenar histórico das tarefas.</br>
-4 - Criar profile no maven para fazer deploy do front junto ao back-end.</br>
+1 - Criar os testes.</br>
+2 - Criar trigger para armazenar histórico das tarefas.</br>
+3 - Criar profile no maven para fazer deploy do front junto ao back-end.</br>
 
 <h1>Falta no front </h1>
 1 - I18n.</br>
