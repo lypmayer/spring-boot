@@ -1,12 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-
-const extractCSS = new ExtractTextPlugin('[name].fonts.css');
-const extractSCSS = new ExtractTextPlugin('[name].styles.css');
 
 const BUILD_DIR = path.resolve(__dirname, 'build');
 const SRC_DIR = path.resolve(__dirname, 'src');
@@ -14,107 +10,115 @@ const SRC_DIR = path.resolve(__dirname, 'src');
 console.log('BUILD_DIR', BUILD_DIR);
 console.log('SRC_DIR', SRC_DIR);
 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env = {}) => {
-  return {
-    entry: {
-      index: [SRC_DIR + '/']
-    },
-    output: {
-      path: BUILD_DIR,
-      filename: '[name].bundle.js'
-    },
-    devServer: {
-      contentBase: BUILD_DIR,
-      port: 8081,
-      compress: true,
-      hot: true,
-      open: true
-    },
-    module: {
-      rules: [
-        {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: true,
-              presets: ['react', 'env']
-            }
-          }
-        },
-        {
-          test: /\.html$/,
-          loader: 'html-loader'
-        },
-        {
-          test: /\.(scss)$/,
-          use: ['css-hot-loader'].concat(extractSCSS.extract({
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {
-                  // alias: {'../img': '../public/img'}
-                }
-              },
-              {
-                loader: 'sass-loader'
-              }
-            ]
-          }))
-        },
-        {
-          test: /\.css$/,
-          use: extractCSS.extract({
-            fallback: 'style-loader',
-            use: 'css-loader'
-          })
-        },
-        {
-          test: /\.(png|jpg|jpeg|gif|ico)$/,
-          use: [
-            {
-              // loader: 'url-loader'
-              loader: 'file-loader',
-              options: {
-                name: '[path][name].[ext]'
-              }
-            }
-          ]
-        },
-        {
-          test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-          loader: 'file-loader',
-          options: {
-            name: './fonts/[name].[ext]'
-          }
-        }]
-    },
-    plugins: [
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify('development'),
-        "process.env.GA_KEY": JSON.stringify("UA-119920405-1")
-      }),
-      new webpack.HotModuleReplacementPlugin(),
-      extractCSS,
-      extractSCSS,
-      new HtmlWebpackPlugin(
-        {
-          inject: true,
-          template: './public/index.html',
-        }
-      ),
-      new ManifestPlugin({
-        fileName: 'asset-manifest.json',
-      }),
-      new CopyWebpackPlugin([
-        { from: 'public/img', to: 'public/img' },
-        { from: 'public/favicon.ico', to: 'public/favicon.ico' }
-      ],
-        { copyUnmodified: false }
-      )
-    ]
-  }
+	return {
+		mode: 'development',
+		entry: {
+			index: [`${SRC_DIR}/`],
+		},
+		output: {
+			path: BUILD_DIR,
+			filename: '[name].bundle.js',
+			chunkFilename: '[name].bundle.js',
+			publicPath: '/',
+		},
+		devServer: {
+			contentBase: BUILD_DIR,
+			compress: false,
+			hot: false,
+			historyApiFallback: true,
+			disableHostCheck: true,
+		},
+		module: {
+			rules: [
+				{
+					test: /\.(js|jsx)$/,
+					exclude: /node_modules/,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							cacheDirectory: true,
+							presets: ['@babel/preset-env', '@babel/preset-react'],
+						},
+					},
+				},
+				{
+					test: /\.html$/,
+					loader: 'html-loader',
+				},
+				{
+					test: /\.s?css$/,
+					use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+				},
+				{
+					test: /\.js$/,
+					exclude: /node_modules/,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							presets: ['@babel/preset-react'],
+						},
+					},
+				},
+				{
+					test: /\.(png|jpg|jpeg|gif|ico)$/,
+					use: [
+						{
+							// loader: 'url-loader'
+							loader: 'file-loader',
+							options: {
+								name: '[path][name].[ext]',
+							},
+						},
+					],
+				},
+				{
+					test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+					loader: 'file-loader',
+					options: {
+						name: './fonts/[name].[ext]',
+					},
+				},
+			],
+		},
+		optimization: {
+			minimize: false,
+			splitChunks: {
+				chunks: 'all',
+				name: true,
+				cacheGroups: {
+					styles: {
+						name: false,
+						test: /\.css$/,
+						chunks: 'all',
+						enforce: true,
+					},
+				},
+			},
+			runtimeChunk: true, // This line is just for you to know where I added the lines above.
+		},
+		devtool: false,
+		plugins: [
+			new webpack.SourceMapDevToolPlugin({}),
+			new webpack.DefinePlugin({
+				'process.env.NODE_ENV': JSON.stringify('development'),
+			}),
+			new MiniCssExtractPlugin({
+				filename: '[name].css',
+			}),
+			new webpack.HotModuleReplacementPlugin(),
+			new HtmlWebpackPlugin({
+				inject: true,
+				template: './public/index.html',
+			}),
+			new ManifestPlugin({
+				fileName: 'asset-manifest.json',
+			}),
+			new CopyWebpackPlugin([{ from: 'public/css', to: 'public/css' }, { from: 'public/images', to: 'public/images' }, { from: 'public/favicon.ico', to: 'public/favicon.ico' }], {
+				copyUnmodified: false,
+			}),
+		],
+	};
 };

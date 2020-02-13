@@ -1,0 +1,47 @@
+{
+	"plugins": ["prettier", "react-redux", "jsx-a11y"],
+	"extends": ["airbnb", "prettier", "plugin:react-redux/recommended"],
+	"parser": "babel-eslint",
+	"rules": {
+		"prettier/prettier": [
+			"error",
+			{
+				"endOfLine": "auto"
+			}
+		],
+		"linebreak-style": 0,
+		"semi": ["error", "always"],
+		"quotes": ["error", "single"],
+		"no-console": ["error"],
+		"import/no-extraneous-dependencies": "off",
+		"class-methods-use-this": ["error", { "exceptMethods": ["defaultHeaders", "render"] }],
+		"react/no-unused-state": "off",
+		"react/forbid-prop-types": ["any"],
+		"react/prefer-stateless-function": false,
+		"react/prop-types": [2, { "ignore": ["layout", "component", "...rest", "path", "sessionStore", "rest"] }],
+		"react-redux/prefer-separate-component-file": "off",
+		"react/jsx-one-expression-per-line": ["off"],
+		"react/jsx-indent": [true, 1],
+		"react/jsx-indent-props": [true, 1],
+		"import/no-cycle": "warn",
+		"react/jsx-filename-extension": [
+			true,
+			{
+				"extensions": [".js", ".jsx"]
+			}
+		],
+		"no-case-declarations": "off",
+		"no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
+		"no-underscore-dangle": "off"
+	},
+	"env": {
+		"node": true,
+		"browser": true
+	},
+	"settings": {
+		"react": {
+			"pragma": "React",
+			"version": "16.7.0"
+		}
+	}
+}
