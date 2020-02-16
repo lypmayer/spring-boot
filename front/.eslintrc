@@ -18,6 +18,8 @@
 		"react/no-unused-state": "off",
 		"react/forbid-prop-types": ["any"],
 		"react/prefer-stateless-function": false,
+		"jsx-a11y/label-has-associated-control": "off",
+		"jsx-a11y/label-has-for": "off",
 		"react/prop-types": [2, { "ignore": ["layout", "component", "...rest", "path", "sessionStore", "rest"] }],
 		"react-redux/prefer-separate-component-file": "off",
 		"react/jsx-one-expression-per-line": ["off"],
