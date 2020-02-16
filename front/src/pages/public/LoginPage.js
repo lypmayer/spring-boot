@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import CardPublicComponent from '../components/CardPublicComponent';
-import { FrontPath } from '../util/Paths';
+import CardPublicComponent from '../../components/CardPublicComponent';
+import { FrontPath } from '../../util/Paths';
 
 class LoginPage extends React.PureComponent {
 	state = {
@@ -18,7 +18,10 @@ class LoginPage extends React.PureComponent {
 		this.setState({ password: event.target.value });
 	};
 
-	onClickLogin = () => {};
+	onClickLogin = () => {
+		const { history } = this.props;
+		history.push(FrontPath.HOME);
+	};
 
 	onClickRegister = () => {
 		const { history } = this.props;

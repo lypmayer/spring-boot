@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
-import CardPublicComponent from '../components/CardPublicComponent';
-import { FrontPath } from '../util/Paths';
+import CardPublicComponent from '../../components/CardPublicComponent';
+import { FrontPath } from '../../util/Paths';
 
 class RegisterPage extends React.PureComponent {
 	state = {

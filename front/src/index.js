@@ -2,15 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route, Router, Switch } from 'react-router';
-import ForgotPasswordPage from './pages/ForgotPasswordPage';
-import ForgotPasswordSuccessPage from './pages/ForgotPasswordSuccessPage';
-import LoginPage from './pages/LoginPage';
-import NewPasswordPage from './pages/NewPasswordPage';
-import NewPasswordSuccessPage from './pages/NewPasswordSuccessPage';
-import Page404 from './pages/Page404';
-import RegisterConfirmPage from './pages/RegisterConfirmPage';
-import RegisterPage from './pages/RegisterPage';
-import RegisterSuccessPage from './pages/RegisterSuccessPage';
+import HomePage from './pages/private/HomePage';
+import ForgotPasswordPage from './pages/public/ForgotPasswordPage';
+import ForgotPasswordSuccessPage from './pages/public/ForgotPasswordSuccessPage';
+import LoginPage from './pages/public/LoginPage';
+import NewPasswordPage from './pages/public/NewPasswordPage';
+import NewPasswordSuccessPage from './pages/public/NewPasswordSuccessPage';
+import Page404 from './pages/public/Page404';
+import RegisterConfirmPage from './pages/public/RegisterConfirmPage';
+import RegisterPage from './pages/public/RegisterPage';
+import RegisterSuccessPage from './pages/public/RegisterSuccessPage';
 import './scss/style.scss';
 import { history, store } from './store/store';
 import Logger from './util/Logger';
@@ -31,6 +32,7 @@ ReactDOM.render(
 					<Route path={FrontPath.REGISTER} render={() => <RegisterPage />} />
 					<Route path={FrontPath.REGISTER_SUCCESS} render={() => <RegisterSuccessPage />} />
 					<Route path={FrontPath.REGISTER_CONFIRM} render={() => <RegisterConfirmPage />} />
+					<Route path={FrontPath.HOME} render={() => <HomePage />} />
 					<Route render={() => <Page404 />} />
 				</Switch>
 			</React.Fragment>

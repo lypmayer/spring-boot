@@ -3,9 +3,9 @@
 import classnames from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CardPublicComponent from '../components/CardPublicComponent';
-import FontAwesomeEnum from '../util/enum/FontAwesomeEnum';
-import { FrontPath } from '../util/Paths';
+import CardPublicComponent from '../../components/CardPublicComponent';
+import FontAwesomeEnum from '../../util/enum/FontAwesomeEnum';
+import { FrontPath } from '../../util/Paths';
 
 class Page404 extends React.PureComponent {
 	render() {

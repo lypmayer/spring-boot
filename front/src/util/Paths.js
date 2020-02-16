@@ -1,4 +1,5 @@
 const FrontPath = {
+	/* PUBLIC */
 	ROOT: '/',
 	LOGIN: '/login',
 	FORGOT_PASSWORD: '/forgot-password',
@@ -9,6 +10,9 @@ const FrontPath = {
 	REGISTER_SUCCESS: '/register-success',
 	REGISTER_CONFIRM: '/register-confirm',
 	ERROR_404: '/404',
+
+	/* PRIVATE */
+	HOME: '/home',
 };
 
 const BackEndPath = {
